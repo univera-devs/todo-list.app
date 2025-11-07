@@ -8,7 +8,7 @@ function App() {
 
   return (
     <div>
-     <p>Merge</p> 
+     <p>Merge Conflit</p> 
     </div>
   )
 }
