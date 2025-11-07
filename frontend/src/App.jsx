@@ -7,9 +7,9 @@ function App() {
   const [count, setCount] = useState(0)
 
   return (
-    <>
-     Merge conflit 
-    </>
+    <div>
+     <p>Merge</p> 
+    </div>
   )
 }
 
