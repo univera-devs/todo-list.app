@@ -8,9 +8,18 @@ use Illuminate\Http\Request;
 
 class TaskController extends Controller
 {
+
     /**
-     * Display a listing of the resource.
+     * @OA\Get(
+     *     path="/api/tasks",
+     *     summary="Get All Tasks",
+     *     tags={"Task"},
+     *     security={{"bearerAuth":{}}},
+     *     @OA\Response(response=200,description="Successful Response"),
+     *     @OA\Response(response=401,description="Unauthenticated")
+     * )
      */
+
     public function index(Request $request)
     {
         $tasks = $request->user()->tasks()->get();
@@ -18,7 +27,29 @@ class TaskController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * @OA\Post(
+     *     path="/api/tasks",
+     *     summary="Create New Task",
+     *     tags={"Task"},
+     *     security={{"bearerAuth":{}}},
+     *     @OA\RequestBody(
+     *         required=true,
+     *         description="Task data",
+     *         @OA\JsonContent(
+     *             required={"title"},
+     *             @OA\Property(property="title",type="string", example="Finish docs"),
+     *             @OA\Property(property="description", type="string", example="Write Swagger docs for API"),
+     *             @OA\Property(property="category_id", type="integer", example=1),
+     *             @OA\Property(property="due_date", type="string", format="date", example="2025-12-01 10:00:00"),
+     *             @OA\Property(property="reminder_at", type="string", format="date", example="2025-12-07 10:00:00"),
+     *             @OA\Property(property="priority", type="string", example="high"),
+     *             @OA\Property(property="reminder_sent", type="boolean", example=0),
+     *         )
+     *     ),
+     *     @OA\Response(response=201,description="Created Successfully"),
+     *     @OA\Response(response=401,description="Unauthenticated"),
+     *     @OA\Response(response=422,description="Validation error")
+     * )
      */
     public function store(Request $request)
     {
@@ -36,7 +67,16 @@ class TaskController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * @OA\Get(
+     *     path="/api/tasks/{id}",
+     *     summary="Show Details Task",
+     *     tags={"Task"},
+     *     security={{"bearerAuth":{}}},
+     *     @OA\Parameter(name="id", in="path", required=true, description="task_id", @OA\Schema(type="integer")),
+     *     @OA\Response(response=200,description="Successful response"),
+     *     @OA\Response(response=404,description="Not Found"),
+     *     @OA\Response(response=401,description="Unauthenticated")
+     * )
      */
     public function show(Task $task)
     {
@@ -45,8 +85,32 @@ class TaskController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * @OA\Put(
+     *     path="/api/tasks/{id}",
+     *     summary="Update Task",
+     *     tags={"Task"},
+     *     security={{"bearerAuth":{}}},
+     *     @OA\Parameter(name="id", in="path", required=true, @OA\Schema(type="integer")),
+     *     @OA\RequestBody(
+     *         required=true,
+     *         description="Task data",
+     *         @OA\JsonContent(
+     *             required={"title"},
+     *             @OA\Property(property="title",type="string", example="Finish docs"),
+     *             @OA\Property(property="description", type="string", example="Write Swagger docs for API"),
+     *             @OA\Property(property="category_id", type="integer", example=1),
+     *             @OA\Property(property="due_date", type="string", format="date", example="2025-12-01 10:00:00"),
+     *             @OA\Property(property="reminder_at", type="string", format="date", example="2025-12-07 10:00:00"),
+     *             @OA\Property(property="priority", type="string", example="high"),
+     *             @OA\Property(property="reminder_sent", type="boolean", example=0),
+     *         )
+     *     ),
+     *     @OA\Response(response=200,description="Updated Successfully"),
+     *     @OA\Response(response=401,description="Unauthenticated"),
+     *     @OA\Response(response=422,description="Validation error")
+     * )
      */
+
     public function update(Request $request, Task $task)
     {
         $this->authorizeUser($task);
@@ -65,7 +129,16 @@ class TaskController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * @OA\Delete(
+     *     path="/api/tasks/{id}",
+     *     summary="Delete Task",
+     *     tags={"Task"},
+     *     security={{"bearerAuth":{}}},
+     *     @OA\Parameter(name="id", in="path", required=true, @OA\Schema(type="integer")),
+     *     @OA\Response(response=200, description="Deleted Successfully"),
+     *     @OA\Response(response=401,description="Unauthenticated"),
+     *     @OA\Response(response=422,description="Validation error")
+     * )
      */
     public function destroy(Task $task)
     {

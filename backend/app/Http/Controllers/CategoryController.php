@@ -8,23 +8,61 @@ use Illuminate\Support\Facades\Auth;
 
 class CategoryController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index(Request $request)
-    {
-        $categories = $request->user()->categories()->get();
-        return response()->json($categories);
-    }
 
     /**
-     * Store a newly created resource in storage.
+     * @OA\Get(
+     *     path="/api/category",
+     *     summary="Get All Categories",
+     *     tags={"Category"},
+     *     security={{"bearerAuth":{}}},
+     *     @OA\Response(response=200,description="Successful Response"),
+     *     @OA\Response(response=401,description="Unauthenticated")
+     * )
      */
+
+    public function index(Request $request)
+    {
+        $user = $request->user();
+
+        if (!$user) {
+            return response()->json([
+                'message' => 'Unauthenticated.'
+            ], 401);
+        }
+
+        $categories = $user->categories()->get();
+
+        return response()->json($categories, 200);
+    }
+
+
+    /**
+     * @OA\Post(
+     *     path="/api/category",
+     *     summary="Create New Category",
+     *     tags={"Category"},
+     *     security={{"bearerAuth":{}}},
+     *
+     *     @OA\RequestBody(
+     *         required=true,
+     *         description="Category data",
+     *         @OA\JsonContent(
+     *             required={"name","color"},
+     *             @OA\Property(property="name", type="string", maxLength=255, example="Work"),
+     *             @OA\Property(property="color", type="string", maxLength=20, example="#ff5733")
+     *         )
+     *     ),
+     *     @OA\Response(response=201,description="Created Successfully"),
+     *     @OA\Response(response=401,description="Unauthenticated"),
+     *     @OA\Response(response=422,description="Validation error")
+     * )
+     */
+
     public function store(Request $request)
     {
         $data = $request->validate([
             'name' => 'required|string|max:100',
-            'color' => 'nullable|string|max:20',
+            'color' => 'required|string|max:20',
         ]);
 
         $category = $request->user()->categories()->create($data);
@@ -33,8 +71,18 @@ class CategoryController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * @OA\Get(
+     *     path="/api/category/{id}",
+     *     summary="Show Details Category",
+     *     tags={"Category"},
+     *     security={{"bearerAuth":{}}},
+     *     @OA\Parameter(name="id", in="path", required=true, description="category_id", @OA\Schema(type="integer")),
+     *     @OA\Response(response=200,description="Successful response"),
+     *     @OA\Response(response=404,description="Not Found"),
+     *     @OA\Response(response=401,description="Unauthenticated")
+     * )
      */
+
     public function show(Category $category)
     {
         $this->authorizeUser($category);
@@ -42,7 +90,25 @@ class CategoryController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * @OA\Put(
+     *     path="/api/category/{id}",
+     *     summary="Update Category",
+     *     tags={"Category"},
+     *     security={{"bearerAuth":{}}},
+     *     @OA\Parameter(name="id", in="path", required=true, @OA\Schema(type="integer")),
+     *     @OA\RequestBody(
+     *         required=true,
+     *         description="Category data",
+     *         @OA\JsonContent(
+     *             required={"name","color"},
+     *             @OA\Property(property="name", type="string",example="Work"),
+     *             @OA\Property(property="color", type="string",example="#ff5733")
+     *         )
+     *     ),
+     *     @OA\Response(response=200,description="Updated Successfully"),
+     *     @OA\Response(response=401,description="Unauthenticated"),
+     *     @OA\Response(response=422,description="Validation error")
+     * )
      */
     public function update(Request $request, Category $category)
     {
@@ -58,7 +124,16 @@ class CategoryController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * @OA\Delete(
+     *     path="/api/category/{id}",
+     *     summary="Delete Category",
+     *     tags={"Category"},
+     *     security={{"bearerAuth":{}}},
+     *     @OA\Parameter(name="id", in="path", required=true, @OA\Schema(type="integer")),
+     *     @OA\Response(response=200, description="Deleted Successfully"),
+     *     @OA\Response(response=401,description="Unauthenticated"),
+     *     @OA\Response(response=422,description="Validation error")
+     * )
      */
     public function destroy(Category $category)
     {
