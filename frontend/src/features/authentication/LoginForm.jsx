@@ -30,12 +30,12 @@ export default function LoginForm() {
       className="w-full flex flex-col justify-between gap-y-52"
       noValidate
     >
-      <div className="flex flex-col gap-y-14">
+      <div className="flex flex-col gap-y-10">
         <TextField
           value={formData.email}
           onChange={handleChange('email')}
           placeholder="Email"
-          icon={<PiEnvelopeSimple className="text-gray-400 size-6" />}
+          icon={<PiEnvelopeSimple className="text-gray-400 size-7" />}
           type="email"
         />
 

@@ -15,15 +15,12 @@ function AuthLayout() {
   }, [params, setParams]);
 
   return (
-    <div className="w-full flex-wrap flex justify-center md:justify-end items-center p-10">
-      <div className="xl:mr-40 lg:max-w-lg sm:max-w-sm w-full flex flex-col gap-y-3 sm:gap-y-12 justify-center items-center">
-        <div className="w-full flex justify-between items-center mt-28 gap-x-10">
-          <QueryNavLink queryValue="login">Login</QueryNavLink>
-          <QueryNavLink queryValue="signup">Sign up</QueryNavLink>
-        </div>
-
-        {tab === 'login' ? <LoginForm /> : <SignupForm />}
+    <div className="w-full md:w-[470px] flex flex-col p-5 gap-10 justify-between items-center">
+      <div className="w-full flex justify-between items-center gap-x-10">
+        <QueryNavLink queryValue="login">Login</QueryNavLink>
+        <QueryNavLink queryValue="signup">Sign up</QueryNavLink>
       </div>
+      {tab === 'login' ? <LoginForm /> : <SignupForm />}
     </div>
   );
 }
