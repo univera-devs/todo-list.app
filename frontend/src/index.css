@@ -9,16 +9,14 @@
 
 @font-face {
   font-family: 'Inter';
-  src: url('./assets/font/Inter/static/Inter_24pt-Regular.ttf')
-    format('truetype');
+  src: url('./assets/font/Inter/static/Inter_24pt-Regular.ttf') format('truetype');
   font-weight: 400;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'Inter';
-  src: url('./assets/font/Inter/static/Inter_24pt-Medium.ttf')
-    format('truetype');
+  src: url('./assets/font/Inter/static/Inter_24pt-Medium.ttf') format('truetype');
   font-weight: 500;
   font-style: normal;
 }
@@ -62,18 +60,31 @@
   --color-secondary-900: #15484c;
   --color-secondary-950: #052a2e;
 
+  /* Warning */
+  --color-warning-50: #fff8eb;
+  --color-warning-100: #feeac7;
+  --color-warning-200: #fdd28a;
+  --color-warning-300: #fcbb4d;
+  --color-warning-400: #fbab24;
+  --color-warning-500: #f59e0b;
+  --color-warning-600: #d98b06;
+  --color-warning-700: #b47409;
+  --color-warning-800: #92610e;
+  --color-warning-900: #78510f;
+  --color-warning-950: #452c03;
+
   /* Success */
-  --color-success-50: #ecfdf7;
-  --color-success-100: #d1faec;
-  --color-success-200: #a7f3da;
-  --color-success-300: #6ee7bf;
-  --color-success-400: #34d39e;
-  --color-success-500: #10b981;
-  --color-success-600: #059666;
-  --color-success-700: #047852;
-  --color-success-800: #065f42;
-  --color-success-900: #064e36;
-  --color-success-950: #022c1e;
+  --color-success-50: #eefff3;
+  --color-success-100: #d6ffe4;
+  --color-success-200: #b0ffcb;
+  --color-success-300: #73ffa4;
+  --color-success-400: #2ff975;
+  --color-success-500: #04e753;
+  --color-success-600: #00bd3f;
+  --color-success-700: #019435;
+  --color-success-800: #07742e;
+  --color-success-900: #085f29;
+  --color-success-950: #003614;
 
   /* Error */
   --color-error-50: #fef2f2;
@@ -111,7 +122,7 @@ button {
 }
 
 /* 👇 Custom global CSS */
-input[type='password']::-ms-reveal,
+/* input[type='password']::-ms-reveal,
 input[type='password']::-ms-clear {
   display: none;
 }
@@ -120,4 +131,4 @@ input[type='password']::-webkit-textfield-decoration-container,
 input[type='password']::-webkit-clear-button,
 input[type='password']::-webkit-password-toggle {
   display: none;
-}
+} */

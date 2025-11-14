@@ -14,6 +14,7 @@ function QueryNavLink({ children, queryKey = 'tab', queryValue }) {
     setParams({ [queryKey]: queryValue });
   };
 
+
   return (
     <button onClick={handleTab} className={active ? navActive : navInActive}>
       {children}
