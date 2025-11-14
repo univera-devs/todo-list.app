@@ -1,5 +1,4 @@
 @import 'tailwindcss';
-@import './styles/global.css';
 
 @font-face {
   font-family: 'Inter';
@@ -105,4 +104,20 @@
 
 body {
   font-family: 'Inter';
+}
+
+button {
+  @apply cursor-pointer;
+}
+
+/* 👇 Custom global CSS */
+input[type='password']::-ms-reveal,
+input[type='password']::-ms-clear {
+  display: none;
+}
+
+input[type='password']::-webkit-textfield-decoration-container,
+input[type='password']::-webkit-clear-button,
+input[type='password']::-webkit-password-toggle {
+  display: none;
 }
