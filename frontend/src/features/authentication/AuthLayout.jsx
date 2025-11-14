@@ -1,6 +1,19 @@
-import AuthTabNavLink from '../../ui/AuthTabButton';
+import { useSearchParams } from 'react-router-dom';
+import QueryNavLink from '../../ui/QueryNavLink';
+import LoginForm from './LoginForm';
+import SignupForm from './SignupForm';
+import { useEffect } from 'react';
 
-function AuthLayout({ children }) {
+function AuthLayout() {
+  const [params, setParams] = useSearchParams();
+  const tab = params.get('tab') || 'login';
+
+  useEffect(() => {
+    if (!params.get('tab')) {
+      setParams({ tab: 'login' });
+    }
+  }, [params, setParams]);
+
   return (
     <div className="w-full flex-wrap flex justify-center xl:justify-end items-center p-10">
       <div className="xl:mr-40 max-w-xl w-full flex flex-col gap-y-3 sm:gap-y-12 justify-center items-center">
@@ -10,10 +23,11 @@ function AuthLayout({ children }) {
           <p className=" font-bold">todo app</p>
         </div>
         <div className="w-full flex justify-between items-center gap-x-10">
-          <AuthTabNavLink to="/auth/login">Login</AuthTabNavLink>
-          <AuthTabNavLink to="/auth/signup">Sign up</AuthTabNavLink>
+          <QueryNavLink queryValue="login">Login</QueryNavLink>
+          <QueryNavLink queryValue="signup">Sign up</QueryNavLink>
         </div>
-        {children}
+
+        {tab === 'login' ? <LoginForm /> : <SignupForm />}
       </div>
     </div>
   );
