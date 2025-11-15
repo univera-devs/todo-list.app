@@ -1,3 +1,4 @@
+import { useAuthContext } from '../context/AuthContext';
 import AuthLayout from '../features/authentication/AuthLayout';
 import Bgsvg from '../features/authentication/Bgsvg';
 
