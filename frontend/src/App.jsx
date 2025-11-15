@@ -1,22 +1,29 @@
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, useLocation } from 'react-router-dom';
 import './index.css';
 import Auth from './pages/auth';
 import { Toaster } from 'react-hot-toast';
 import MainList from './pages/todo/list/MainList';
 import Header from './components/header/Header';
+import MainHome from './pages/home/MainHome';
 
 function App() {
+  const location = useLocation()
   return (
-    <div className='bg-back-950 w-full'>
+    <div className='bg-back-950 w-full flex items-center justify-center flex-col gap-8'>
       <Toaster />
-      <div className='flex items-center justify-center w-full py-3'>
-        <Header />
+      {!location?.pathname.startsWith("/auth") &&
+        <div className='flex items-center justify-center w-full py-3'>
+          <Header />
+        </div>
+      }
+      <div className={`bg-back-950 flex items-center justify-center ${location?.pathname !== "/auth" ? "w-2/3" : "w-full"}`}>
+        <Routes>
+          <Route path="/" element={<MainHome />}></Route>
+          <Route path="/auth" element={<Auth />}></Route>
+          <Route path="/todo" element={<MainList />}></Route>
+        </Routes>
       </div>
-      <Routes>
-        <Route path="/auth" element={<Auth />}></Route>
-        <Route path="/todo" element={<MainList />}></Route>
-      </Routes>
-    </div>
+    </div >
   );
 }
 
