@@ -96,10 +96,6 @@
                                     "password": {
                                         "type": "string",
                                         "example": "123456"
-                                    },
-                                    "password_confirmation": {
-                                        "type": "string",
-                                        "example": "123456"
                                     }
                                 },
                                 "type": "object"

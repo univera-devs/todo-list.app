@@ -19,7 +19,7 @@ const nav = [
 
 const Header = () => {
     return (
-        <div className="flex items-center justify-between rounded-full px-5 p-2 w-2/3 bg-primary-500">
+        <div className="flex items-center justify-between rounded-full px-5 p-2 w-[90%] lg:w-2/3 bg-primary-500">
             <img
                 className="rounded-full shadow-lg"
                 src={logo}
