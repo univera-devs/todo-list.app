@@ -9,7 +9,7 @@ import MainHome from './pages/home/MainHome';
 function App() {
   const location = useLocation()
   return (
-    <div className='bg-back-950 w-full flex items-center justify-center flex-col gap-8'>
+    <div className='bg-back-950 w-full min-h-screen flex items-center justify-start flex-col gap-8'>
       <Toaster />
       {!location?.pathname.startsWith("/auth") &&
         <div className='flex items-center justify-center w-full py-3'>
