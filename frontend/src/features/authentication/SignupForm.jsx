@@ -38,7 +38,7 @@ export default function SignupForm() {
   return (
     <form
       onSubmit={handleSubmit}
-      className="w-full flex flex-col justify-between"
+      className="w-full flex flex-col justify-between h-96"
       noValidate
     >
       <div className="flex flex-col gap-y-10">
