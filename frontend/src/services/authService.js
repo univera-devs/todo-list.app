@@ -10,3 +10,7 @@ export async function login(data) {
   return response.data;
 }
 
+export async function logout(data) {
+  const response = await http.post('/api/logout', data);
+  return response.data;
+}
