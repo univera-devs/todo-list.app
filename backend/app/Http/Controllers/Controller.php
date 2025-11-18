@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 /**
  * @OA\Info(
  *     title="TodoList API",
- *     version="1.0.0",
+ *     version="1.1.0",
  *     description="Documention API For Backend TodoList (Laravel + Sanctum)"
  * ),
  * @OA\SecurityScheme(
