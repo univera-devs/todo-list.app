@@ -5,4 +5,8 @@ export async function signUp(data) {
   return response.data;
 }
 
+export async function login(data) {
+  const response = await http.post('/api/login', data);
+  return response.data;
+}
 

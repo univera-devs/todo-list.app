@@ -4,26 +4,35 @@ import TextField from '../../ui/TextField';
 import BtnPrimary from '../../ui/BtnPrimary';
 import toast from 'react-hot-toast';
 
+import useSignUp from './useSignUp';
+import Loading from '../../ui/Loading';
+
 export default function SignupForm() {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     password: '',
-    confirmPassword: '',
+    password_confirmation: '',
   });
+
+  const { handleRegister, isPending } = useSignUp(formData);
 
   const handleChange = (field) => (e) => {
     setFormData((prev) => ({ ...prev, [field]: e.target.value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-
-    if (!formData.email || !formData.password) {
-      toast.error('Please fill out all field');
-
+    if (
+      !formData.name ||
+      !formData.email ||
+      !formData.password ||
+      !formData.password_confirmation
+    ) {
+      toast.error('Please fill out all fields');
       return;
     }
+    handleRegister();
   };
 
   return (
@@ -57,12 +66,18 @@ export default function SignupForm() {
         />
 
         <TextField
-          value={formData.confirmPassword}
-          onChange={handleChange('confirmPassword')}
+          value={formData.password_confirmation}
+          onChange={handleChange('password_confirmation')}
           placeholder="Confirm Password"
           type="password"
         />
-        <BtnPrimary type="submit">Sign Up</BtnPrimary>
+        <BtnPrimary
+          classname="flex justify-center items-center gap-x-2"
+          type={'submit'}
+        >
+          Sign Up
+          {isPending ? <Loading /> : null}
+        </BtnPrimary>
       </div>
     </form>
   );

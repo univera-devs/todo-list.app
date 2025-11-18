@@ -3,9 +3,15 @@ import QueryNavLink from '../../ui/QueryNavLink';
 import LoginForm from './LoginForm';
 import SignupForm from './SignupForm';
 import { useEffect } from 'react';
+import { useAuthContext } from '../../context/AuthContext';
+import useNavigateHome from '../../../../../freelnacer-app/src/hooks/useNavigateHome';
 
 function AuthLayout() {
+  const { token } = useAuthContext();
+  const navigateHome = useNavigateHome();
+
   const [params, setParams] = useSearchParams();
+
   const tab = params.get('tab') || 'login';
 
   useEffect(() => {
@@ -13,6 +19,12 @@ function AuthLayout() {
       setParams({ tab: 'login' });
     }
   }, [params, setParams]);
+
+  useEffect(() => {
+    if (token) {
+      navigateHome();
+    }
+  }, [token, navigateHome]);
 
   return (
     <div className="w-full md:w-[470px] flex flex-col p-5 gap-10 justify-between items-center">
