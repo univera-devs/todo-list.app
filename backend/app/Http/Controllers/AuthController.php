@@ -82,7 +82,21 @@ class AuthController extends Controller
      *             @OA\Property(property="message", type="string", example="successful login user")
      *         )
      *     ),
-     *     @OA\Response(response=401, description="Invalid credentials"),
+     *     @OA\Response(
+     *         response=401,
+     *         description="Invalid credentials",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="message", type="string", example="Incorrect email or password.")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=422,
+     *         description="Validation error",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="message", type="string", example="The given data was invalid."),
+     *             @OA\Property(property="errors", type="object")
+     *         )
+     *     )
      * )
      */
     public function login(Request $request)
@@ -93,12 +107,11 @@ class AuthController extends Controller
         ]);
 
         $user = User::where('email', $data['email'])->first();
-        $password = Hash::check($data['password'], $user->password);
 
-        if (!$user || !$password) {
+        if (!$user || !Hash::check($data['password'], $user->password)) {
             return response()->json([
-                'error' => 'Invalid credentials.',
-            ]);
+                'message' => 'Incorrect email or password.',
+            ], 401);
         }
 
         $token = $user->createToken('auth_token')->plainTextToken;
@@ -130,3 +143,4 @@ class AuthController extends Controller
         return response()->json(['message' => 'Logged out successfully']);
     }
 }
+
