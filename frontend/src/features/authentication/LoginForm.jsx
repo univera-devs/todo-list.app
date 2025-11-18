@@ -3,12 +3,16 @@ import { PiEnvelopeSimple } from 'react-icons/pi';
 import TextField from '../../ui/TextField';
 import BtnPrimary from '../../ui/BtnPrimary';
 import toast from 'react-hot-toast';
+import useLogin from './uselogin';
+import Loading from '../../ui/Loading';
 
 export default function LoginForm() {
   const [formData, setFormData] = useState({
     email: '',
     password: '',
   });
+
+  const { handleLogin, isPending } = useLogin(formData);
 
   const handleChange = (field) => (e) => {
     setFormData((prev) => ({ ...prev, [field]: e.target.value }));
@@ -22,6 +26,8 @@ export default function LoginForm() {
 
       return;
     }
+
+    handleLogin();
   };
 
   return (
@@ -47,7 +53,13 @@ export default function LoginForm() {
         />
       </div>
 
-      <BtnPrimary type="submit">Log in</BtnPrimary>
+      <BtnPrimary
+        classname="flex justify-center items-center gap-x-2"
+        type={'submit'}
+      >
+        Log in
+        {isPending ? <Loading /> : null}
+      </BtnPrimary>
     </form>
   );
 }
