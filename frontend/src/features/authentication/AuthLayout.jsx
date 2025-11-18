@@ -3,9 +3,15 @@ import QueryNavLink from '../../ui/QueryNavLink';
 import LoginForm from './LoginForm';
 import SignupForm from './SignupForm';
 import { useEffect } from 'react';
+import { useAuthContext } from '../../context/AuthContext';
+import useNavigateHome from '../../../../../freelnacer-app/src/hooks/useNavigateHome';
 
 function AuthLayout() {
+  const { token } = useAuthContext();
+  const navigateHome = useNavigateHome();
+
   const [params, setParams] = useSearchParams();
+
   const tab = params.get('tab') || 'login';
 
   useEffect(() => {
@@ -14,12 +20,30 @@ function AuthLayout() {
     }
   }, [params, setParams]);
 
+  useEffect(() => {
+    if (token) {
+      navigateHome();
+    }
+  }, [token, navigateHome]);
+
   return (
     <div className="w-full md:w-[470px] flex flex-col p-5 gap-10 justify-between items-center">
-      <div className="w-full flex justify-between items-center gap-x-10">
-        <QueryNavLink queryValue="login">Login</QueryNavLink>
-        <QueryNavLink queryValue="signup">Sign up</QueryNavLink>
-      </div>
+      <div className="w-full">
+  {/* Tabs */}
+  <div className="relative flex justify-between items-center">
+    <QueryNavLink queryValue="login">Login</QueryNavLink>
+    <QueryNavLink queryValue="signup">Sign up</QueryNavLink>
+
+    {/* Sliding underline */}
+    <div
+      className={`
+        absolute bottom-0 h-0.5 bg-blue-500 transition-all duration-500
+        ${tab === 'login' ? 'left-0 w-1/2' : 'left-1/2 w-1/2'}
+      `}
+    ></div>
+  </div>
+</div>
+
       {tab === 'login' ? <LoginForm /> : <SignupForm />}
     </div>
   );

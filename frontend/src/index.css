@@ -9,14 +9,16 @@
 
 @font-face {
   font-family: 'Inter';
-  src: url('./assets/font/Inter/static/Inter_24pt-Regular.ttf') format('truetype');
+  src: url('./assets/font/Inter/static/Inter_24pt-Regular.ttf')
+    format('truetype');
   font-weight: 400;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'Inter';
-  src: url('./assets/font/Inter/static/Inter_24pt-Medium.ttf') format('truetype');
+  src: url('./assets/font/Inter/static/Inter_24pt-Medium.ttf')
+    format('truetype');
   font-weight: 500;
   font-style: normal;
 }
@@ -122,7 +124,7 @@ button {
 }
 
 /* 👇 Custom global CSS */
-/* input[type='password']::-ms-reveal,
+input[type='password']::-ms-reveal,
 input[type='password']::-ms-clear {
   display: none;
 }
@@ -131,4 +133,4 @@ input[type='password']::-webkit-textfield-decoration-container,
 input[type='password']::-webkit-clear-button,
 input[type='password']::-webkit-password-toggle {
   display: none;
-} */
+}
