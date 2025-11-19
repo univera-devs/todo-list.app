@@ -38,6 +38,7 @@ export default function LoginForm() {
     >
       <div className="flex flex-col gap-y-10">
         <TextField
+          disabled={isPending}
           value={formData.email}
           onChange={handleChange('email')}
           placeholder="Email"
@@ -46,6 +47,7 @@ export default function LoginForm() {
         />
 
         <TextField
+          disabled={isPending}
           value={formData.password}
           onChange={handleChange('password')}
           placeholder="Password"
@@ -54,11 +56,14 @@ export default function LoginForm() {
       </div>
 
       <BtnPrimary
+        disabled={isPending}
         classname="flex justify-center items-center gap-x-2"
         type={'submit'}
       >
         Log in
-        {isPending ? <Loading /> : null}
+        {isPending &&
+          <Loading disabled={isPending} />
+        }
       </BtnPrimary>
     </form>
   );
