@@ -2,10 +2,13 @@ import { PiNotePencil, PiListBold, PiPencilSimpleLine, PiTrash, PiSquaresFour } 
 import List from "./list/List";
 import { useState } from "react";
 import Card from "./card/Card";
+import useListTodos from "./useListTodos";
 
 const MainTodo = () => {
   const [showButtonList, setShowButtonList] = useState(null)
   const [viewTodo, setViewTodo] = useState("list")
+
+  const { data, isPending } = useListTodos()
 
   return (
     <div className="flex flex-col items-center justify-center gap-5 w-full">
