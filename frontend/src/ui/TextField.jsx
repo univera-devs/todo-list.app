@@ -7,6 +7,7 @@ function TextField({
   value,
   onChange,
   classname,
+  disabled,
   type = 'text',
 }) {
   const [showPassword, setShowPassword] = useState(false);
@@ -22,6 +23,7 @@ function TextField({
       </label>
       <input
         autoComplete="off"
+        disabled={disabled}
         value={value}
         onChange={onChange}
         className={`outline-0 w-full bg-transparent placeholder-text-gray-300 ${classname}`}
@@ -29,9 +31,10 @@ function TextField({
       />
       {isPassword && (
         <button
+          disabled={disabled}
           type="button"
           onClick={() => setShowPassword((prev) => !prev)}
-          className="text-gray-300 cursor-pointer hover:text-primary-500 transition"
+          className={`text-gray-300 cursor-pointer disabled:text-gray-300 hover:text-primary-500 transition`}
         >
           {showPassword ? (
             <PiEyeSlash className="size-6" />
