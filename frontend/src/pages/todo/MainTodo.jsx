@@ -30,7 +30,7 @@ const MainTodo = () => {
 
         {viewTodo === "list"
           ? (
-            <div div className="flex flex-col gap-10 w-full">
+            <div className="flex flex-col gap-10 w-full">
               <div className="flex relative flex-col items-start w-full"
                 onMouseEnter={() => setShowButtonList(1)}
                 onMouseLeave={() => setShowButtonList(null)}

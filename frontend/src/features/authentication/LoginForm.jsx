@@ -33,7 +33,7 @@ export default function LoginForm() {
   return (
     <form
       onSubmit={handleSubmit}
-      className="w-full flex flex-col justify-between h-96 gap-y-56"
+      className="w-full flex flex-col justify-between min-h-fit gap-y-56"
       noValidate
     >
       <div className="flex flex-col gap-y-10">

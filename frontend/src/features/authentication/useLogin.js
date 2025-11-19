@@ -2,7 +2,8 @@ import { useMutation } from '@tanstack/react-query';
 import { login } from '../../services/authService';
 import toast from 'react-hot-toast';
 import { useAuthContext } from '../../context/AuthContext';
-import useNavigateHome from '../../../../../freelnacer-app/src/hooks/useNavigateHome';
+// import useNavigateHome from '../../../../../freelnacer-app/src/hooks/useNavigateHome';
+import useNavigateHome from '../../hook/useNavigateHome';
 
 export default function useLogin(formData) {
   const { setToken } = useAuthContext();
