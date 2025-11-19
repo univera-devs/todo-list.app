@@ -1,25 +1,15 @@
-import { useSearchParams } from 'react-router-dom';
+import { useLocation } from "react-router-dom";
 
-function QueryNavLink({ children, queryKey = 'tab', queryValue }) {
-  const navActive =
-    'py-3 text-xl font-bold text-primary-500 bg-transparent flex-1 text-center';
+function QueryNavLink({ children, queryKey, handleSearch }) {
+  const location = useLocation()
 
-  const navInActive =
-    'py-3 text-xl text-gray-50 bg-transparent flex-1 text-center';
-
-  const [params, setParams] = useSearchParams();
-  const active = params.get(queryKey) === queryValue;
-
-  const handleTab = () => {
-    setParams({ [queryKey]: queryValue });
-  };
+  const navActive = 'py-3 text-xl font-bold text-primary-500 bg-transparent flex-1 text-center';
+  const navInActive = 'py-3 text-xl text-gray-50 bg-transparent flex-1 text-center';
 
   return (
     <button
-      onClick={handleTab}
-      className={`transition-all duration-300 ${
-        active ? navActive : navInActive
-      }`}
+      onClick={() => handleSearch("tab", queryKey)}
+      className={`transition-all duration-300 ${(("?tab=" + queryKey) === location?.search) ? navActive : navInActive}`}
     >
       {children}
     </button>

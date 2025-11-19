@@ -1,8 +1,9 @@
 import { RotatingLines } from 'react-loader-spinner';
 
-function Loading({ width = '28', height = '28' }) {
+function Loading({ width = '28', height = '28', disabled }) {
   return (
     <RotatingLines
+      disabled={disabled}
       visible={true}
       height={width}
       width={height}

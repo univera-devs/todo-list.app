@@ -2,10 +2,13 @@ import { PiNotePencil, PiListBold, PiPencilSimpleLine, PiTrash, PiSquaresFour } 
 import List from "./list/List";
 import { useState } from "react";
 import Card from "./card/Card";
+import useListTodos from "./useListTodos";
 
 const MainTodo = () => {
   const [showButtonList, setShowButtonList] = useState(null)
   const [viewTodo, setViewTodo] = useState("list")
+
+  const { data, isPending } = useListTodos()
 
   return (
     <div className="flex flex-col items-center justify-center gap-5 w-full">
@@ -30,7 +33,7 @@ const MainTodo = () => {
 
         {viewTodo === "list"
           ? (
-            <div div className="flex flex-col gap-10 w-full">
+            <div className="flex flex-col gap-10 w-full">
               <div className="flex relative flex-col items-start w-full"
                 onMouseEnter={() => setShowButtonList(1)}
                 onMouseLeave={() => setShowButtonList(null)}

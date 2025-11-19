@@ -38,11 +38,12 @@ export default function SignupForm() {
   return (
     <form
       onSubmit={handleSubmit}
-      className="w-full flex flex-col justify-between h-96"
+      className="w-full flex flex-col justify-between min-h-fit"
       noValidate
     >
       <div className="flex flex-col gap-y-10">
         <TextField
+          disabled={isPending}
           value={formData.name}
           onChange={handleChange('name')}
           placeholder="Name"
@@ -51,6 +52,7 @@ export default function SignupForm() {
         />
 
         <TextField
+          disabled={isPending}
           value={formData.email}
           onChange={handleChange('email')}
           placeholder="Email"
@@ -59,6 +61,7 @@ export default function SignupForm() {
         />
 
         <TextField
+          disabled={isPending}
           value={formData.password}
           onChange={handleChange('password')}
           placeholder="Password"
@@ -66,17 +69,19 @@ export default function SignupForm() {
         />
 
         <TextField
+          disabled={isPending}
           value={formData.password_confirmation}
           onChange={handleChange('password_confirmation')}
           placeholder="Confirm Password"
           type="password"
         />
         <BtnPrimary
+          disabled={isPending}
           classname="flex justify-center items-center gap-x-2"
           type={'submit'}
         >
           Sign Up
-          {isPending ? <Loading /> : null}
+          {isPending ? <Loading disabled={isPending} /> : null}
         </BtnPrimary>
       </div>
     </form>
