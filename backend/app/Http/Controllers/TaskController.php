@@ -22,7 +22,8 @@ class TaskController extends Controller
 
     public function index(Request $request)
     {
-        $tasks = $request->user()->tasks()->get();
+        $tasks = $request->user()->tasks()->with('category')->get();
+
         return response()->json($tasks);
     }
 
@@ -40,10 +41,10 @@ class TaskController extends Controller
      *             @OA\Property(property="title",type="string", example="Finish docs"),
      *             @OA\Property(property="description", type="string", example="Write Swagger docs for API"),
      *             @OA\Property(property="category_id", type="integer", example=1),
-     *             @OA\Property(property="due_date", type="string", format="date", example="2025-12-01 10:00:00"),
-     *             @OA\Property(property="reminder_at", type="string", format="date", example="2025-12-07 10:00:00"),
-     *             @OA\Property(property="priority", type="string", example="high"),
-     *             @OA\Property(property="reminder_sent", type="boolean", example=0),
+     *             @OA\Property(property="status", type="string", enum={"pending", "done"}, example="pending"),
+     *             @OA\Property(property="due_date", type="string", format="date-time", example="2025-12-01 10:00:00"),
+     *             @OA\Property(property="reminder_at", type="string", format="date-time", example="2025-12-07 10:00:00"),
+     *             @OA\Property(property="priority", type="string", enum={"low","medium","high"}, example="high"),
      *         )
      *     ),
      *     @OA\Response(response=201,description="Created Successfully"),
@@ -57,10 +58,10 @@ class TaskController extends Controller
             'title' => 'required|string|max:255',
             'description' => 'nullable|string',
             'category_id' => 'nullable|exists:categories,id',
+            'status' => 'in:pending,done',
             'due_date' => 'nullable|date',
             'reminder_at' => 'nullable|date',
             'priority' => 'nullable|in:low,medium,high',
-            'reminder_sent' => 'nullable|boolean',
         ]);
         $task = $request->user()->tasks()->create($data);
         return response()->json($task, 201);
@@ -95,13 +96,13 @@ class TaskController extends Controller
      *         required=true,
      *         description="Task data",
      *         @OA\JsonContent(
-     *             required={"title"},
      *             @OA\Property(property="title",type="string", example="Finish docs"),
      *             @OA\Property(property="description", type="string", example="Write Swagger docs for API"),
      *             @OA\Property(property="category_id", type="integer", example=1),
-     *             @OA\Property(property="due_date", type="string", format="date", example="2025-12-01 10:00:00"),
-     *             @OA\Property(property="reminder_at", type="string", format="date", example="2025-12-07 10:00:00"),
-     *             @OA\Property(property="priority", type="string", example="high"),
+     *             @OA\Property(property="status", type="string", enum={"pending", "done"}, example="done"),
+     *             @OA\Property(property="due_date", type="string", format="date-time", example="2025-12-01 10:00:00"),
+     *             @OA\Property(property="reminder_at", type="string", format="date-time", example="2025-12-07 10:00:00"),
+     *             @OA\Property(property="priority", type="string", enum={"low","medium","high"}, example="high"),
      *             @OA\Property(property="reminder_sent", type="boolean", example=0),
      *         )
      *     ),
@@ -110,7 +111,6 @@ class TaskController extends Controller
      *     @OA\Response(response=422,description="Validation error")
      * )
      */
-
     public function update(Request $request, Task $task)
     {
         $this->authorizeUser($task);
@@ -118,10 +118,11 @@ class TaskController extends Controller
             'title' => 'sometimes|required|string|max:255',
             'description' => 'nullable|string',
             'category_id' => 'nullable|exists:categories,id',
+            'status' => 'in:pending,done',
             'due_date' => 'nullable|date',
             'reminder_at' => 'nullable|date',
             'priority' => 'nullable|in:low,medium,high',
-            'is_completed' => 'nullable|boolean',
+            'reminder_sent' => 'nullable|boolean',
         ]);
         $task->update($data);
 
