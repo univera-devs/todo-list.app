@@ -3,11 +3,12 @@ import List from "./list/List";
 import { useState } from "react";
 import Card from "./card/Card";
 import useListTodos from "./useListTodos";
+import MainCreate from "./create/MainCreate";
 
 const MainTodo = () => {
   const [showButtonList, setShowButtonList] = useState(null)
   const [viewTodo, setViewTodo] = useState("list")
-
+  const [showModal, setShowModal] = useState(true)
   const { data, isPending } = useListTodos()
 
   return (
@@ -16,7 +17,9 @@ const MainTodo = () => {
 
       <div className="flex flex-col items-center justify-center gap-10 w-full">
         <div className="flex items-center justify-between w-full">
-          <div className="bg-primary-500 cursor-pointer rounded-md flex items-center p-2 gap-3">
+          <div
+            onClick={() => setShowModal(true)}
+            className="bg-primary-500 cursor-pointer rounded-md flex items-center p-2 gap-3">
             <span className="text-white">Create</span>
             <PiNotePencil className="text-white text-xl" />
           </div>
@@ -62,6 +65,9 @@ const MainTodo = () => {
             </div>
           )}
       </div>
+      {showModal &&
+        <MainCreate setShowModal={setShowModal} />
+      }
     </div >
   )
 }
