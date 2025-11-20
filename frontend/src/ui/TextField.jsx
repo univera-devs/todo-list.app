@@ -15,9 +15,9 @@ function TextField({
   const isPassword = type === 'password';
 
   return (
-    <div className="text-lg group relative text-gray-50 border-b-2 z-10 border-gray-300 focus-within:border-b-2 focus-within:border-primary-500 flex bg-transparent py-3 px-2 justify-between items-center transition-all">
-      <label className={`absolute ${value === '' ? 'absolute' : '-translate-y-10'}
-           transition-transform text-gray-300 text-lg group-focus-within:font-bold group-focus-within:-translate-y-10 -z-10 group-focus-within:text-primary-500`}
+    <div className="text-lg group relative text-gray-50 w-full border-b-2 z-10 border-gray-300 focus-within:border-b-2 focus-within:border-primary-500 flex bg-transparent p-2 justify-between items-center transition-all">
+      <label className={`absolute transition-transform text-gray-300 group-focus-within:font-bold group-focus-within:-translate-y-7 -z-10 group-focus-within:text-primary-500
+           ${value === '' ? 'absolute' : '-translate-y-7'}`}
       >
         {placeholder}
       </label>
