@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query'
-import { listTodos } from '../../services/todos/listServices'
+import { listTodos } from '../../services/todos/todoServices'
 
 const useListTodos = () => {
     const { data, isPending } = useQuery({

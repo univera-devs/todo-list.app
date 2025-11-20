@@ -4,33 +4,48 @@ import TextField from "../../../ui/TextField"
 import { useState } from "react";
 import { PiNotePencil } from "react-icons/pi";
 import BtnPrimary from "../../../ui/BtnPrimary";
+import useCreateTodo from "../useCreateTodo";
+import toast from "react-hot-toast";
 
 
 const MainCreate = ({ setShowModal }) => {
     const [tips, setTips] = useState([])
     const [formData, setFormData] = useState({
         title: '',
-        desc: '',
-        tips: tips,
+        description: '',
+        // tips: tips,
         status: '',
-        level: '',
+        priority: '',
     });
+    const { handleCreateTodo, isPending } = useCreateTodo(formData)
+
     const [tipsText, setTipsText] = useState("")
-    const [deleteTips, setDeleteTips] = useState(null)
 
-
+    // Added data to state
     const handleChange = (text) => (e) => {
         setFormData((prev) => ({ ...prev, [text]: e.target.value }))
     }
 
+    // Added Tips List
     const handleListTips = (tip) => {
         setTips((prev) => ([...prev, tip]))
         setTipsText("")
     }
 
+    //Delete Tip
     const handleDelete = (index) => {
         setTips(tips.filter(item => item !== index))
     }
+
+    // Handle post data
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        if (!formData?.title || !formData?.description) {
+            toast.error("Please fill out field")
+        }
+        handleCreateTodo()
+    }
+
 
     return (
         <Modal>
@@ -51,8 +66,8 @@ const MainCreate = ({ setShowModal }) => {
                         icon={<PiNotePencil className="text-2xl text-white" />}
                     />
                     <TextField
-                        value={formData?.desc}
-                        onChange={handleChange("desc")}
+                        value={formData?.description}
+                        onChange={handleChange("description")}
                         placeholder={"Description"}
                         classname={"w-full"}
                         icon={<PiNotePencil className="text-2xl text-white" />}
@@ -112,7 +127,7 @@ const MainCreate = ({ setShowModal }) => {
 
                     </div>
                 </div>
-                <BtnPrimary>
+                <BtnPrimary onClick={handleSubmit}>
                     Create
                 </BtnPrimary>
             </div>
