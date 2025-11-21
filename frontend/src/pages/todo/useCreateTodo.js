@@ -6,13 +6,11 @@ const useCreateTodo = (formData) => {
   const { mutateAsync, isPending } = useMutation({
     mutationFn: createTodo
   })
-  console.log(formData)
   const handleCreateTodo = async () => {
     try {
-      const { message } = await mutateAsync(formData)
       const data = await mutateAsync(formData)
       console.log(data)
-      toast.success(message);
+      toast.success(data.message);
     } catch (error) {
       toast.error(error.res.data.message || "Create Todo Failed")
     }

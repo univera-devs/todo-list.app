@@ -1,7 +1,14 @@
 
 const List = ({ item }) => {
     return (
-        <div className={`flex items-center justify-between border-l-4 border-error-600 rounded-r-full w-full bg-primary-600/14 py-2 px-5`}>
+        <div className={`flex items-center justify-between border-l-4 rounded-r-full w-full bg-primary-600/14 py-2 px-5
+        ${item?.priority === "high"
+                ? "border-error-600"
+                : item?.priority === "medium"
+                    ? "border-warning-500"
+                    : "border-gray-300"
+            }
+        `}>
             <div className="flex flex-col items-start gap-2 w-[60%]">
                 <span className="font-bold text-white"> {item?.title}</span>
                 <p className="text-sm text-white">{item?.description}</p>
@@ -20,7 +27,7 @@ const List = ({ item }) => {
                     ? "border-gray-300 text-gray-300 bg-gray-300/13 "
                     : "border-success-500 text-success-500 bg-success-500/19"}
                 `}>
-                {item?.status}  
+                {item?.status}
             </span>
         </div>
     )

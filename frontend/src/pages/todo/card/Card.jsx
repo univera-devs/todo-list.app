@@ -1,10 +1,15 @@
 import { PiPencilSimpleLine, PiTrash } from "react-icons/pi"
 
-const Card = ({ item }) => {
-
+const Card = ({ item, handleDelete }) => {
     return (
         <div className={`w-full flex flex-col items-start justify-between gap-6 p-4 rounded-t-2xl min-h-60 h-min-h-60 max-h-min-h-60 bg-primary-600/14 
-        border-b-4 border-error-600`}>
+        border-b-4
+           ${item?.priority === "high"
+                ? "border-error-600"
+                : item?.priority === "medium"
+                    ? "border-warning-500"
+                    : "border-gray-300"
+            }`}>
 
             <div className="flex flex-col item-start gap-2">
                 <span className="text-white text-lg font-bold flex items-center justify-start w-full">
@@ -28,7 +33,10 @@ const Card = ({ item }) => {
                             <PiPencilSimpleLine className="text-white text-xl" />
                         </div>
                         <div className="bg-gray-600/33 w-[90%] py-1.5 rounded-md cursor-pointer flex items-center justify-center">
-                            <PiTrash className="text-white text-xl" />
+                            <PiTrash
+                                onClick={() => handleDelete(item?.id)}
+                                className="text-white text-xl"
+                            />
                         </div>
                     </div>
 

@@ -8,33 +8,32 @@ import useCreateTodo from "../useCreateTodo";
 import toast from "react-hot-toast";
 
 const MainCreate = ({ setShowModal }) => {
-    const [tips, setTips] = useState([])
     const [formData, setFormData] = useState({
         title: '',
         description: '',
-        tips: tips,
+        // category: '',
         status: '',
         priority: '',
     });
     const { handleCreateTodo, isPending } = useCreateTodo(formData)
 
-    const [tipsText, setTipsText] = useState("")
+    const [categortText, setCategortText] = useState("")
 
     // Added data to state
     const handleChange = (text) => (e) => {
         setFormData((prev) => ({ ...prev, [text]: e.target.value }))
     }
 
-    // Added Tips List
-    const handleListTips = (tip) => {
-        setTips((prev) => ([...prev, tip]))
-        setTipsText("")
-    }
+    // Added categort List
+    // const handleListcategort = (category) => {
+    //     setCategort((prev) => ([...prev, category]))
+    //     setCategortText("")
+    // }
 
-    //Delete Tip
-    const handleDelete = (index) => {
-        setTips(tips.filter(item => item !== index))
-    }
+    // //Delete category
+    // const handleDelete = (index) => {
+    //     setCategort(categort.filter(item => item !== index))
+    // }
 
     // Handle post data
     const handleSubmit = (e) => {
@@ -44,6 +43,7 @@ const MainCreate = ({ setShowModal }) => {
         }
         handleCreateTodo()
     }
+
 
 
     return (
@@ -75,33 +75,32 @@ const MainCreate = ({ setShowModal }) => {
                     />
 
                     <div className="flex items-center justify-between w-full gap-3">
-
                         <div className="w-[40%] flex flex-col items-start gap-2 justify-center">
                             <TextField
                                 disabled={isPending}
-                                value={tipsText}
-                                onChange={(e) => setTipsText(e.target.value)}
-                                placeholder={"Tips"}
+                                value={categortText}
+                                onChange={(e) => setCategortText(e.target.value)}
+                                placeholder={"categort"}
                                 classname={"w-full"}
                                 icon={
                                     <PiPlus
-                                        onClick={() => tipsText !== "" && handleListTips(tipsText)}
+                                        // onClick={() => categortText !== "" && handleListcategort(categortText)}
                                         className="text-2xl text-white hover:text-primary-500 duration-300 cursor-pointer"
                                     />
                                 }
                             />
-                            <div className="flex items-start w-full gap-2 flex-wrap">
-                                {tips?.map((item, index) => (
+                            {/* <div className="flex items-start w-full gap-2 flex-wrap">
+                                {categort?.map((item, index) => (
                                     <span
 
                                         key={index}
-                                        onClick={() => !isPending && handleDelete(item)}
+                                        onClick={() => !isPending  && handleDelete(item)}
                                         className="flex items-center cursor-pointer justify-center w-fit px-2 py-1 rounded-md text-xs text-white bg-[#F5F5F5]/22 hover:bg-gray-800 duration-500 hover:text-gray-400"
                                     >
                                         {item}
                                     </span>
                                 ))}
-                            </div>
+                            </div> */}
                         </div>
 
                         <div className="flex items-center justify-between w-[50%] gap-2">
@@ -114,7 +113,7 @@ const MainCreate = ({ setShowModal }) => {
                                 value={formData.status}
                             >
                                 <option value="pending">Pending</option>
-                                <option value="down">Down</option>
+                                <option value="done">Done</option>
                             </select>
                             <select
                                 disabled={isPending}
@@ -124,7 +123,7 @@ const MainCreate = ({ setShowModal }) => {
                                 value={formData.priority}
                                 onChange={handleChange("priority")}
                             >
-                                <option value="hight">High Priority</option>
+                                <option value="high">High Priority</option>
                                 <option value="medium">Medium Priority</option>
                                 <option value="low">Low Priority</option>
                             </select>
