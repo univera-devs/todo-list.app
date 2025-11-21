@@ -7,13 +7,12 @@ import BtnPrimary from "../../../ui/BtnPrimary";
 import useCreateTodo from "../useCreateTodo";
 import toast from "react-hot-toast";
 
-
 const MainCreate = ({ setShowModal }) => {
     const [tips, setTips] = useState([])
     const [formData, setFormData] = useState({
         title: '',
         description: '',
-        // tips: tips,
+        tips: tips,
         status: '',
         priority: '',
     });
@@ -59,6 +58,7 @@ const MainCreate = ({ setShowModal }) => {
                 </div>
                 <div className="flex flex-col items-center justify-center gap-8 w-full">
                     <TextField
+                        disabled={isPending}
                         value={formData?.title}
                         onChange={handleChange("title")}
                         placeholder={"Title"}
@@ -66,6 +66,7 @@ const MainCreate = ({ setShowModal }) => {
                         icon={<PiNotePencil className="text-2xl text-white" />}
                     />
                     <TextField
+                        disabled={isPending}
                         value={formData?.description}
                         onChange={handleChange("description")}
                         placeholder={"Description"}
@@ -77,6 +78,7 @@ const MainCreate = ({ setShowModal }) => {
 
                         <div className="w-[40%] flex flex-col items-start gap-2 justify-center">
                             <TextField
+                                disabled={isPending}
                                 value={tipsText}
                                 onChange={(e) => setTipsText(e.target.value)}
                                 placeholder={"Tips"}
@@ -91,8 +93,9 @@ const MainCreate = ({ setShowModal }) => {
                             <div className="flex items-start w-full gap-2 flex-wrap">
                                 {tips?.map((item, index) => (
                                     <span
+
                                         key={index}
-                                        onClick={() => handleDelete(item)}
+                                        onClick={() => !isPending && handleDelete(item)}
                                         className="flex items-center cursor-pointer justify-center w-fit px-2 py-1 rounded-md text-xs text-white bg-[#F5F5F5]/22 hover:bg-gray-800 duration-500 hover:text-gray-400"
                                     >
                                         {item}
@@ -103,6 +106,7 @@ const MainCreate = ({ setShowModal }) => {
 
                         <div className="flex items-center justify-between w-[50%] gap-2">
                             <select
+                                disabled={isPending}
                                 className="bg-gray-600 outline-none rounded-md p-2 text-sm text-white"
                                 name="status"
                                 onChange={handleChange("status")}
@@ -113,11 +117,12 @@ const MainCreate = ({ setShowModal }) => {
                                 <option value="down">Down</option>
                             </select>
                             <select
+                                disabled={isPending}
                                 className="bg-gray-600 outline-none rounded-md p-2 text-sm text-white"
-                                name="level"
-                                id="level"
-                                value={formData.level}
-                                onChange={handleChange("level")}
+                                name="priority"
+                                id="priority"
+                                value={formData.priority}
+                                onChange={handleChange("priority")}
                             >
                                 <option value="hight">High Priority</option>
                                 <option value="medium">Medium Priority</option>

@@ -8,9 +8,9 @@ import MainCreate from "./create/MainCreate";
 const MainTodo = () => {
   const [showButtonList, setShowButtonList] = useState(null)
   const [viewTodo, setViewTodo] = useState("list")
-  const [showModal, setShowModal] = useState(true)
+  const [showModal, setShowModal] = useState(false)
   const { data, isPending } = useListTodos()
-
+  console.log(data)
   return (
     <div className="flex flex-col items-center justify-center gap-5 w-full">
       <h2 className="text-4xl text-white text-center w-full font-bold">Todo List</h2>
@@ -37,31 +37,31 @@ const MainTodo = () => {
         {viewTodo === "list"
           ? (
             <div className="flex flex-col gap-10 w-full">
-              <div className="flex relative flex-col items-start w-full"
-                onMouseEnter={() => setShowButtonList(1)}
-                onMouseLeave={() => setShowButtonList(null)}
-              >
-                <List />
+              {data?.map((item) => (
+                <div key={item?.id} className="flex relative flex-col items-start w-full"
+                  onMouseEnter={() => setShowButtonList(item?.id)}
+                  onMouseLeave={() => setShowButtonList(null)}
+                >
+                  <List item={item} />
 
-                {showButtonList === 1 &&
-                  <div className="flex absolute -bottom-7 items-center justify-start gap-1 ml-1">
-                    <div className="bg-gray-600/33 w-14 cursor-pointer py-1 flex items-center justify-center">
-                      <PiPencilSimpleLine className="text-white text-xl" />
+                  {showButtonList === item?.id &&
+                    <div className="flex absolute -bottom-7 items-center justify-start gap-1 ml-1">
+                      <div className="bg-gray-600/33 w-14 cursor-pointer py-1 flex items-center justify-center">
+                        <PiPencilSimpleLine className="text-white text-xl" />
+                      </div>
+                      <div className="bg-gray-600/33 w-14 cursor-pointer py-1 flex items-center justify-center">
+                        <PiTrash className="text-white text-xl" />
+                      </div>
                     </div>
-                    <div className="bg-gray-600/33 w-14 cursor-pointer py-1 flex items-center justify-center">
-                      <PiTrash className="text-white text-xl" />
-                    </div>
-                  </div>
-                }
-              </div>
+                  }
+                </div>
+              ))}
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 justify-items-center gap-5 w-full">
-              <Card />
-              <Card />
-              <Card />
-              <Card />
-              <Card />
+              {data?.map((item) => (
+                <Card key={item?.id} item={item} />
+              ))}
             </div>
           )}
       </div>

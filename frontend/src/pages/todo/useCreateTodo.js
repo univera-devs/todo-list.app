@@ -3,11 +3,10 @@ import { createTodo } from "../../services/todos/todoServices"
 import toast from "react-hot-toast"
 
 const useCreateTodo = (formData) => {
-  
   const { mutateAsync, isPending } = useMutation({
     mutationFn: createTodo
   })
-
+  console.log(formData)
   const handleCreateTodo = async () => {
     try {
       const { message } = await mutateAsync(formData)
