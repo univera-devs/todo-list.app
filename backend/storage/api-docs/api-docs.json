@@ -444,23 +444,32 @@
                                         "type": "integer",
                                         "example": 1
                                     },
+                                    "status": {
+                                        "type": "string",
+                                        "enum": [
+                                            "pending",
+                                            "done"
+                                        ],
+                                        "example": "pending"
+                                    },
                                     "due_date": {
                                         "type": "string",
-                                        "format": "date",
+                                        "format": "date-time",
                                         "example": "2025-12-01 10:00:00"
                                     },
                                     "reminder_at": {
                                         "type": "string",
-                                        "format": "date",
+                                        "format": "date-time",
                                         "example": "2025-12-07 10:00:00"
                                     },
                                     "priority": {
                                         "type": "string",
+                                        "enum": [
+                                            "low",
+                                            "medium",
+                                            "high"
+                                        ],
                                         "example": "high"
-                                    },
-                                    "reminder_sent": {
-                                        "type": "boolean",
-                                        "example": 0
                                     }
                                 },
                                 "type": "object"
@@ -543,9 +552,6 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "required": [
-                                    "title"
-                                ],
                                 "properties": {
                                     "title": {
                                         "type": "string",
@@ -559,18 +565,31 @@
                                         "type": "integer",
                                         "example": 1
                                     },
+                                    "status": {
+                                        "type": "string",
+                                        "enum": [
+                                            "pending",
+                                            "done"
+                                        ],
+                                        "example": "done"
+                                    },
                                     "due_date": {
                                         "type": "string",
-                                        "format": "date",
+                                        "format": "date-time",
                                         "example": "2025-12-01 10:00:00"
                                     },
                                     "reminder_at": {
                                         "type": "string",
-                                        "format": "date",
+                                        "format": "date-time",
                                         "example": "2025-12-07 10:00:00"
                                     },
                                     "priority": {
                                         "type": "string",
+                                        "enum": [
+                                            "low",
+                                            "medium",
+                                            "high"
+                                        ],
                                         "example": "high"
                                     },
                                     "reminder_sent": {
