@@ -10,8 +10,10 @@ const MainTodo = () => {
   const [showButtonList, setShowButtonList] = useState(null)
   const [viewTodo, setViewTodo] = useState("list")
   const [showModal, setShowModal] = useState(false)
+  const [idTodo, setIdTodo] = useState(null)
   const { data, isPending: isPendingList } = useListTodos()
   const { handleDeleteTodo, isPending } = useDeleteTodo()
+
 
   //Delete Todo
   const handleDelete = (id) => {
@@ -43,7 +45,7 @@ const MainTodo = () => {
 
         {viewTodo === "list"
           ? (
-            <div className="flex flex-col gap-10 w-full">
+            <div className="flex flex-col gap-5 w-full">
               {data?.map((item) => (
                 <div key={item?.id} className="flex relative flex-col items-start w-full"
                   onMouseEnter={() => setShowButtonList(item?.id)}
@@ -53,13 +55,17 @@ const MainTodo = () => {
 
                   {showButtonList === item?.id &&
                     <div className="flex absolute -bottom-7 items-center justify-start gap-1 ml-1">
-                      <div className="bg-gray-600/33 w-14 cursor-pointer py-1 flex items-center justify-center">
+                      <div
+                        onClick={() => setIdTodo(item?.id)}
+                        className="bg-gray-600/33 w-14 cursor-pointer py-1 flex items-center justify-center"
+                      >
                         <PiPencilSimpleLine className="text-white text-xl" />
                       </div>
-                      <div className="bg-gray-600/33 w-14 cursor-pointer py-1 flex items-center justify-center">
-                        <PiTrash
-                          onClick={() => handleDelete(item?.id)}
-                          className="text-white text-xl" />
+                      <div
+                        onClick={() => handleDelete(item?.id)}
+                        className="bg-gray-600/33 w-14 cursor-pointer py-1 flex items-center justify-center"
+                      >
+                        <PiTrash className="text-white text-xl" />
                       </div>
                     </div>
                   }
@@ -69,13 +75,18 @@ const MainTodo = () => {
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 justify-items-center gap-5 w-full">
               {data?.map((item) => (
-                <Card key={item?.id} item={item} handleDelete={handleDelete} />
+                <Card
+                  key={item?.id}
+                  item={item}
+                  setIdTodo={setIdTodo}
+                  handleDelete={handleDelete}
+                />
               ))}
             </div>
           )}
       </div>
-      {showModal &&
-        <MainCreate setShowModal={setShowModal} />
+      {(showModal || idTodo) &&
+        <MainCreate setShowModal={setShowModal} setIdTodo={setIdTodo} idTodo={idTodo} />
       }
     </div >
   )

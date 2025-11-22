@@ -1,6 +1,6 @@
 import { PiPencilSimpleLine, PiTrash } from "react-icons/pi"
 
-const Card = ({ item, handleDelete }) => {
+const Card = ({ item, handleDelete, setIdTodo }) => {
     return (
         <div className={`w-full flex flex-col items-start justify-between gap-6 p-4 rounded-t-2xl min-h-60 h-min-h-60 max-h-min-h-60 bg-primary-600/14 
         border-b-4
@@ -29,14 +29,17 @@ const Card = ({ item, handleDelete }) => {
                 }
                 <div className="flex items-center justify-between w-full gap-2">
                     <div className="flex items-center justify-center gap-3 w-1/2">
-                        <div className="bg-gray-600/33 w-[90%] py-1.5 rounded-md cursor-pointer flex items-center justify-center">
+                        <div
+                            onClick={() => setIdTodo(item?.id)}
+                            className="bg-gray-600/33 w-[90%] py-1.5 rounded-md cursor-pointer flex items-center justify-center"
+                        >
                             <PiPencilSimpleLine className="text-white text-xl" />
                         </div>
-                        <div className="bg-gray-600/33 w-[90%] py-1.5 rounded-md cursor-pointer flex items-center justify-center">
-                            <PiTrash
-                                onClick={() => handleDelete(item?.id)}
-                                className="text-white text-xl"
-                            />
+                        <div
+                            onClick={() => handleDelete(item?.id)}
+                            className="bg-gray-600/33 w-[90%] py-1.5 rounded-md cursor-pointer flex items-center justify-center"
+                        >
+                            <PiTrash className="text-white text-xl" />
                         </div>
                     </div>
 
