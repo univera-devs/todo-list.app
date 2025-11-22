@@ -1,27 +1,47 @@
 import { PiPlus, PiX } from "react-icons/pi"
 import Modal from "../../../components/modal/Modal"
 import TextField from "../../../ui/TextField"
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { PiNotePencil } from "react-icons/pi";
 import BtnPrimary from "../../../ui/BtnPrimary";
 import useCreateTodo from "../useCreateTodo";
 import toast from "react-hot-toast";
 import useCreateCategory from "../useCreateCategory";
+import useDataTodo from "../useDataTodo";
+import useUpdateTodo from "../useUpdateTodo";
 
-const MainCreate = ({ setShowModal }) => {
+const MainCreate = ({ setShowModal, idTodo, setIdTodo }) => {
+    const { data: dataTodo, isPending: isPendingDataTodo } = useDataTodo(idTodo)
     const [dataCategory, setDataCategory] = useState({
         name: '',
         color: '#fff',
     })
-    const { handleCreateCategory, isPending: isPendingCategory, data, isPendingGet } = useCreateCategory(dataCategory)
+    const { handleCreateCategory, isPending: isPendingCategory, data, isPendingGetCategory } = useCreateCategory(dataCategory)
     const [formData, setFormData] = useState({
         title: '',
         description: '',
-        category: data?.[0],
+        category: '',
         status: 'pending',
         priority: '',
     });
+
+    useEffect(() => {
+        if (dataTodo) {
+            setFormData(prev => ({
+                ...prev,
+                title: dataTodo.title ?? '',
+                description: dataTodo.description ?? '',
+                category: dataTodo.category ?? '',
+                status: dataTodo.status ?? 'pending',
+                priority: dataTodo.priority ?? '',
+            }))
+        }
+    }, [dataTodo])
+
+
+
     const { handleCreateTodo, isPending } = useCreateTodo(formData)
+    const { handleUpdateTodo, isPending: isPendingUpdateTodo } = useUpdateTodo(formData, idTodo)
 
     // Added data to state
     const handleChange = (text) => (e) => {
@@ -31,11 +51,20 @@ const MainCreate = ({ setShowModal }) => {
     // Handle post data
     const handleSubmit = (e) => {
         e.preventDefault();
-        if (!formData?.title || !formData?.description) {
+        if (!formData?.title || !formData?.description || !formData?.status) {
             toast.error("Please fill out field")
         }
         handleCreateTodo()
     }
+
+    const handleUpdate = (e) => {
+        e.preventDefault();
+        handleUpdateTodo({
+            id: idTodo,
+            data: formData
+        });
+        toast.success("Update Success");
+    };
 
     // Added data to category state
     const handleChangeCategory = (text) => (e) => {
@@ -50,7 +79,6 @@ const MainCreate = ({ setShowModal }) => {
         handleCreateCategory()
     }
 
-
     return (
         <Modal>
             <div className="flex flex-col items-center justify-start gap-8 p-5 rounded-lg w-2/3 lg:w-1/2 xl:w-1/3
@@ -58,7 +86,10 @@ const MainCreate = ({ setShowModal }) => {
                 <div className="flex items-center justify-between w-full">
                     <span className="text-3xl text-white font-bold">Create Todo</span>
                     <PiX
-                        onClick={() => setShowModal(false)}
+                        onClick={() => {
+                            setShowModal(false)
+                            setIdTodo(null)
+                        }}
                         className="text-2xl text-white cursor-pointer" />
                 </div>
                 <div className="flex flex-col items-center justify-center gap-8 w-full">
@@ -146,8 +177,8 @@ const MainCreate = ({ setShowModal }) => {
                     </div>
 
                 </div>
-                <BtnPrimary onClick={handleSubmit}>
-                    Create
+                <BtnPrimary onClick={idTodo ? handleUpdate : handleSubmit}>
+                    {idTodo ? "Update" : "Create"}
                 </BtnPrimary>
             </div>
         </Modal>

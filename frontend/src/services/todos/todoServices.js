@@ -15,6 +15,17 @@ export async function deleteTodo(id) {
     return response.data;
 }
 
+export async function updateTodo(id, data) {
+    const response = await http.put(`/api/tasks/${id}`, data);
+    return response.data;
+}
+
+export async function dataTodo(id) {
+    const response = await http.get(`/api/tasks/${id}`);
+    return response.data;
+}
+
+// category
 export async function createCategory(data) {
     const response = await http.post(`/api/category`, data);
     return response.data;
