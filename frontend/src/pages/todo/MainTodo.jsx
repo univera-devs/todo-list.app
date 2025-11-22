@@ -43,7 +43,7 @@ const MainTodo = () => {
 
         {viewTodo === "list"
           ? (
-            <div className="flex flex-col gap-10 w-full">
+            <div className="flex flex-col gap-5 w-full">
               {data?.map((item) => (
                 <div key={item?.id} className="flex relative flex-col items-start w-full"
                   onMouseEnter={() => setShowButtonList(item?.id)}

@@ -1,7 +1,7 @@
 
 const List = ({ item }) => {
     return (
-        <div className={`flex items-center justify-between border-l-4 rounded-r-full w-full bg-primary-600/14 py-2 px-5
+        <div className={`flex items-center justify-between border-l-4 rounded-r-full w-full bg-primary-600/14 py-3 px-5
         ${item?.priority === "high"
                 ? "border-error-600"
                 : item?.priority === "medium"
@@ -22,7 +22,7 @@ const List = ({ item }) => {
                     </div>
                 }
             </div>
-            <span className={`flex items-center justify-center px-4 py-1 rounded-md text-sm border
+            <span className={`flex items-center justify-center max-w-20 w-20 min-w-20 px-4 py-1 rounded-md text-sm border
                 ${item?.status === "pending"
                     ? "border-gray-300 text-gray-300 bg-gray-300/13 "
                     : "border-success-500 text-success-500 bg-success-500/19"}

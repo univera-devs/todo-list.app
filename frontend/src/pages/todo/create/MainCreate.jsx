@@ -9,19 +9,19 @@ import toast from "react-hot-toast";
 import useCreateCategory from "../useCreateCategory";
 
 const MainCreate = ({ setShowModal }) => {
-    const [formData, setFormData] = useState({
-        title: '',
-        description: '',
-        category: '',
-        status: '',
-        priority: '',
-    });
     const [dataCategory, setDataCategory] = useState({
         name: '',
         color: '#fff',
     })
-    const { handleCreateTodo, isPending } = useCreateTodo(formData)
     const { handleCreateCategory, isPending: isPendingCategory, data, isPendingGet } = useCreateCategory(dataCategory)
+    const [formData, setFormData] = useState({
+        title: '',
+        description: '',
+        category: data?.[0],
+        status: 'pending',
+        priority: '',
+    });
+    const { handleCreateTodo, isPending } = useCreateTodo(formData)
 
     // Added data to state
     const handleChange = (text) => (e) => {
@@ -120,11 +120,11 @@ const MainCreate = ({ setShowModal }) => {
 
                     <div className="flex items-center justify-start w-full gap-2">
                         <select
+                            id="status"
+                            name="status"
                             disabled={isPending}
                             className="bg-gray-600 outline-none rounded-md p-2 text-sm text-white"
-                            name="status"
                             onChange={handleChange("status")}
-                            id="status"
                             value={formData.status}
                         >
                             <option value="pending">Pending</option>
@@ -138,6 +138,7 @@ const MainCreate = ({ setShowModal }) => {
                             value={formData.priority}
                             onChange={handleChange("priority")}
                         >
+                            <option value="">None Priority</option>
                             <option value="high">High Priority</option>
                             <option value="medium">Medium Priority</option>
                             <option value="low">Low Priority</option>
