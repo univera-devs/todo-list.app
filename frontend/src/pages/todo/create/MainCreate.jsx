@@ -64,6 +64,7 @@ const MainCreate = ({ setShowModal, idTodo, setIdTodo }) => {
             data: formData
         });
         toast.success("Update Success");
+        setIdTodo(null)
     };
 
     // Added data to category state
