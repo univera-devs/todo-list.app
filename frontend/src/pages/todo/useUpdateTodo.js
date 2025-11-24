@@ -2,12 +2,16 @@
 import { useMutation } from "@tanstack/react-query"
 import { updateTodo } from "../../services/todos/todoServices"
 
-const useUpdateTodo = (id) => {
-    const { mutate: handleUpdateTodo, isPending } = useMutation({
-        mutationFn: ({ id, data }) => updateTodo(id, data)
-    })
+const useUpdateTodo = () => {
+    const { mutate, isPending } = useMutation({
+        mutationFn: ({ id, data }) => updateTodo(id, data),
+    });
 
-    return { handleUpdateTodo, isPending }
-}
+    return {
+        handleUpdateTodo: mutate,
+        isPending,
+    };
+};
+
 
 export default useUpdateTodo

@@ -3,7 +3,7 @@ import { deleteTodo } from "../../services/todos/todoServices"
 import toast from "react-hot-toast"
 
 const useDeleteTodo = () => {
-    const { mutateAsync, isPending } = useMutation({
+    const { mutateAsync } = useMutation({
         mutationFn: deleteTodo
     })
     const handleDeleteTodo = async (id) => {
@@ -15,7 +15,7 @@ const useDeleteTodo = () => {
             toast.error(error.res.data.error || "Delete Failed")
         }
     }
-    return { handleDeleteTodo, isPending }
+    return { handleDeleteTodo }
 }
 
 export default useDeleteTodo

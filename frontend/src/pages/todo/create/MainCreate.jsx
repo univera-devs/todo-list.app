@@ -16,11 +16,10 @@ const MainCreate = ({ setShowModal, idTodo, setIdTodo }) => {
         name: '',
         color: '#fff',
     })
-    const { handleCreateCategory, isPending: isPendingCategory, data, isPendingGetCategory } = useCreateCategory(dataCategory)
     const [formData, setFormData] = useState({
         title: '',
         description: '',
-        category: '',
+        category_id: '',
         status: 'pending',
         priority: '',
     });
@@ -31,7 +30,7 @@ const MainCreate = ({ setShowModal, idTodo, setIdTodo }) => {
                 ...prev,
                 title: dataTodo.title ?? '',
                 description: dataTodo.description ?? '',
-                category: dataTodo.category ?? '',
+                category_id: dataTodo.category_id ?? '',
                 status: dataTodo.status ?? 'pending',
                 priority: dataTodo.priority ?? '',
             }))
@@ -39,9 +38,10 @@ const MainCreate = ({ setShowModal, idTodo, setIdTodo }) => {
     }, [dataTodo])
 
 
-
+    const { handleCreateCategory, isPending: isPendingCategory, data, isPendingGetCategory } = useCreateCategory(dataCategory)
     const { handleCreateTodo, isPending } = useCreateTodo(formData)
     const { handleUpdateTodo, isPending: isPendingUpdateTodo } = useUpdateTodo(formData, idTodo)
+
 
     // Added data to state
     const handleChange = (text) => (e) => {
@@ -74,9 +74,6 @@ const MainCreate = ({ setShowModal, idTodo, setIdTodo }) => {
 
     // Handle post category
     const createCategory = () => {
-        if (!formData?.category) {
-            toast.error("Error Category")
-        }
         handleCreateCategory()
     }
 
@@ -95,7 +92,7 @@ const MainCreate = ({ setShowModal, idTodo, setIdTodo }) => {
                 </div>
                 <div className="flex flex-col items-center justify-center gap-8 w-full">
                     <TextField
-                        disabled={isPending}
+                        disabled={isPending && (isPendingDataTodo || isPendingCategory || isPendingGetCategory || isPendingUpdateTodo)}
                         value={formData?.title}
                         onChange={handleChange("title")}
                         placeholder={"Title"}
@@ -103,7 +100,7 @@ const MainCreate = ({ setShowModal, idTodo, setIdTodo }) => {
                         icon={<PiNotePencil className="text-2xl text-white" />}
                     />
                     <TextField
-                        disabled={isPending}
+                        disabled={isPending && (isPendingDataTodo || isPendingCategory || isPendingGetCategory || isPendingUpdateTodo)}
                         value={formData?.description}
                         onChange={handleChange("description")}
                         placeholder={"Description"}
@@ -114,7 +111,7 @@ const MainCreate = ({ setShowModal, idTodo, setIdTodo }) => {
                     <div className="flex items-center justify-between w-full gap-3">
                         <div className="w-[40%] flex items-start gap-2 justify-center">
                             <TextField
-                                disabled={isPending}
+                                disabled={isPending && (isPendingDataTodo || isPendingCategory || isPendingGetCategory || isPendingUpdateTodo)}
                                 value={dataCategory.name}
                                 onChange={handleChangeCategory("name")}
                                 placeholder={"category"}
@@ -130,12 +127,12 @@ const MainCreate = ({ setShowModal, idTodo, setIdTodo }) => {
 
                         <div className="flex items-center justify-end w-[50%] gap-2">
                             <select
-                                disabled={isPending}
+                                disabled={isPending && (isPendingDataTodo || isPendingCategory || isPendingGetCategory || isPendingUpdateTodo)}
                                 className="bg-gray-600 w-[60%] outline-none rounded-md p-2 text-sm text-white"
-                                name="category"
-                                onChange={handleChange("category")}
-                                id="category"
-                                value={formData.category}
+                                name="category_id"
+                                onChange={handleChange("category_id")}
+                                id="category_id"
+                                value={formData.category_id}
                             >
                                 {data?.map((item) => (
                                     <option
@@ -154,7 +151,7 @@ const MainCreate = ({ setShowModal, idTodo, setIdTodo }) => {
                         <select
                             id="status"
                             name="status"
-                            disabled={isPending}
+                            disabled={isPending && (isPendingDataTodo || isPendingCategory || isPendingGetCategory || isPendingUpdateTodo)}
                             className="bg-gray-600 outline-none rounded-md p-2 text-sm text-white"
                             onChange={handleChange("status")}
                             value={formData.status}
@@ -163,7 +160,7 @@ const MainCreate = ({ setShowModal, idTodo, setIdTodo }) => {
                             <option value="done">Done</option>
                         </select>
                         <select
-                            disabled={isPending}
+                            disabled={isPending && (isPendingDataTodo || isPendingCategory || isPendingGetCategory || isPendingUpdateTodo)}
                             className="bg-gray-600 outline-none rounded-md p-2 text-sm text-white"
                             name="priority"
                             id="priority"
