@@ -9,7 +9,6 @@ const API = axios.create({
   },
 });
 
-// REQUEST INTERCEPTOR
 API.interceptors.request.use((config) => {
   const token = sessionStorage.getItem('token');
 
