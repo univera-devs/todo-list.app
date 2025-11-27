@@ -1,6 +1,5 @@
 
 const List = ({ item }) => {
-
     return (
         <div className={`flex items-center justify-between border-l-4 rounded-r-full w-full bg-primary-600/14 py-3 px-5
         ${item?.priority === "high"

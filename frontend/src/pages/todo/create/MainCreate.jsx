@@ -51,8 +51,9 @@ const MainCreate = ({ setShowModal, idTodo, setIdTodo }) => {
     // Handle post data
     const handleSubmit = (e) => {
         e.preventDefault();
-        if (!formData?.title || !formData?.description || !formData?.status) {
+        if (!formData?.title || !formData?.description) {
             toast.error("Please fill out field")
+            return;
         }
         handleCreateTodo()
     }
@@ -65,6 +66,7 @@ const MainCreate = ({ setShowModal, idTodo, setIdTodo }) => {
         });
         toast.success("Update Success");
         setIdTodo(null)
+        setShowModal(false)
     };
 
     // Added data to category state
@@ -88,7 +90,8 @@ const MainCreate = ({ setShowModal, idTodo, setIdTodo }) => {
                             setShowModal(false)
                             setIdTodo(null)
                         }}
-                        className="text-2xl text-white cursor-pointer" />
+                        className="text-2xl text-white cursor-pointer"
+                    />
                 </div>
                 <div className="flex flex-col items-center justify-center gap-8 w-full">
                     <TextField

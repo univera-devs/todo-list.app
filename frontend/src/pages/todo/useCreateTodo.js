@@ -1,18 +1,22 @@
-import { useMutation } from "@tanstack/react-query"
+import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { createTodo } from "../../services/todos/todoServices"
 import toast from "react-hot-toast"
 
 const useCreateTodo = (formData) => {
+  const queryClient = useQueryClient();
+
   const { mutateAsync, isPending } = useMutation({
-    mutationFn: createTodo
+    mutationFn: createTodo,
+    onSettled : () => queryClient.invalidateQueries(["todos"])
   })
+
   const handleCreateTodo = async () => {
     try {
       const data = await mutateAsync(formData)
       console.log(data)
-      toast.success(data.message);
+      toast.success("Create Todo Successfully");
     } catch (error) {
-      toast.error(error.res.data.message || "Create Todo Failed")
+      toast.error(error.message || "Create Todo Failed")
     }
   }
 

@@ -20,6 +20,7 @@ const MainTodo = () => {
   const handleDelete = (id) => {
     handleDeleteTodo(id)
   }
+console.log(data)
 
   return (
     <div className="flex flex-col items-center justify-center gap-5 w-full">
@@ -49,7 +50,9 @@ const MainTodo = () => {
             ? (
               <div className="flex flex-col gap-5 w-full">
                 {data?.map((item) => (
-                  <div key={item?.id} className="flex relative flex-col items-start w-full"
+                  <div
+                    key={item?.id}
+                    className="flex relative flex-col items-start w-full"
                     onMouseEnter={() => setShowButtonList(item?.id)}
                     onMouseLeave={() => setShowButtonList(null)}
                   >

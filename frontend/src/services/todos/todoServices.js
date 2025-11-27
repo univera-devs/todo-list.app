@@ -2,7 +2,7 @@ import { http } from '../httpService';
 
 export async function listTodos() {
     const response = await http.get('/api/tasks');
-    return response.data;
+    return response.data ?? [];
 }
 
 export async function createTodo(data) {
@@ -21,6 +21,7 @@ export async function updateTodo(id, data) {
 }
 
 export async function dataTodo(id) {
+    if (!id) return;
     const response = await http.get(`/api/tasks/${id}`);
     return response.data;
 }

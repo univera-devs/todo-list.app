@@ -1,5 +1,5 @@
-import { useMutation, useQuery } from "@tanstack/react-query"
 import toast from "react-hot-toast"
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { createCategory, listCategory } from "../../services/todos/todoServices"
 
 const useCategory = (formData) => {
@@ -10,9 +10,11 @@ const useCategory = (formData) => {
         queryFn: listCategory
     })
 
+    const queryClient = useQueryClient()
     // POST
     const { mutateAsync, isPending } = useMutation({
-        mutationFn: createCategory
+        mutationFn: createCategory,
+        onSuccess: () => queryClient.invalidateQueries({ queryKey: ["todos"] })
     })
 
     const handleCreateCategory = async () => {
