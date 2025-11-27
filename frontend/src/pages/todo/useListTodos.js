@@ -3,8 +3,9 @@ import { listTodos } from '../../services/todos/todoServices'
 
 const useListTodos = () => {
     const { data, isPending } = useQuery({
-        queryKey: ["listTodos"],
-        queryFn: listTodos
+        queryKey: ["todos"],
+        queryFn: listTodos,
+        initialData: [],
     });
     return { data, isPending }
 }

@@ -16,7 +16,7 @@ const List = ({ item }) => {
                     <div className="flex items-center justify-start gap-2 w-full">
                         <div className="flex items-center justify-center px-2 py-1 border border-gray-600 rounded-md bg-gray-600/22">
                             <span className="text-white text-xs">
-                                {item?.category}
+                                {item?.category?.name}
                             </span>
                         </div>
                     </div>

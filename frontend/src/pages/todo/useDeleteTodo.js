@@ -1,10 +1,12 @@
-import { useMutation } from "@tanstack/react-query"
+import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { deleteTodo } from "../../services/todos/todoServices"
 import toast from "react-hot-toast"
 
 const useDeleteTodo = () => {
-    const { mutateAsync, isPending } = useMutation({
-        mutationFn: deleteTodo
+    const queryClient = useQueryClient()
+    const { mutateAsync } = useMutation({
+        mutationFn: deleteTodo,
+        onSuccess: () => queryClient.invalidateQueries({ queryKey: ["todos"] }),
     })
     const handleDeleteTodo = async (id) => {
         try {
@@ -15,7 +17,7 @@ const useDeleteTodo = () => {
             toast.error(error.res.data.error || "Delete Failed")
         }
     }
-    return { handleDeleteTodo, isPending }
+    return { handleDeleteTodo }
 }
 
 export default useDeleteTodo
