@@ -25,7 +25,7 @@ const List = ({ item }) => {
             <span className={`flex items-center justify-center max-w-20 w-20 min-w-20 px-4 py-1 rounded-md text-sm border
                 ${item?.status === "pending"
                     ? "border-gray-300 text-gray-300 bg-gray-300/13 "
-                    : "border-success-500 text-success-500 bg-success-500/19"}
+                    : "border-success-500 text-success-500 bg-success-500/14"}
                 `}>
                 {item?.status}
             </span>
