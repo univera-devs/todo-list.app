@@ -56,6 +56,7 @@ const MainCreate = ({ setShowModal, idTodo, setIdTodo }) => {
             return;
         }
         handleCreateTodo()
+        setShowModal(false)
     }
 
     const handleUpdate = (e) => {
