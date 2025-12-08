@@ -49,7 +49,7 @@ const Card = ({ item, handleDelete, setIdTodo }) => {
                         <span className={`flex items-center justify-center w-[70%] py-1 rounded-md text-sm border
                             ${item?.status === "pending"
                                 ? "border-gray-300 text-gray-300 bg-gray-300/13 "
-                                : "border-success-500 text-success-500 bg-success-500/19"}
+                                : "border-success-500 text-success-500 bg-success-500/14"}
                              `}>
                             {item?.status}
                         </span>
