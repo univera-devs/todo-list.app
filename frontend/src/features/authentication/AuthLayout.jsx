@@ -25,11 +25,11 @@ function AuthLayout() {
     })
   }
 
-  useEffect(() => {
-    if (token) {
-      navigateHome();
-    }
-  }, [token, navigateHome]);
+  // useEffect(() => {
+  //   if (token) {
+  //     navigateHome();
+  //   }
+  // }, [token, navigateHome]);
 
   return (
     <div className="w-full md:w-[470px] flex flex-col p-5 gap-10 justify-between items-center">

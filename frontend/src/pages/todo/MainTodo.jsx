@@ -20,7 +20,7 @@ const MainTodo = () => {
   const handleDelete = (id) => {
     handleDeleteTodo(id)
   }
-console.log(data)
+
 
   return (
     <div className="flex flex-col items-center justify-center gap-5 w-full">

@@ -1,4 +1,4 @@
-import { Route, Routes, useLocation } from 'react-router-dom';
+import { Navigate, Outlet, Route, Routes, useLocation } from 'react-router-dom';
 import './index.css';
 import Auth from './pages/auth';
 import { Toaster } from 'react-hot-toast';
@@ -11,6 +11,14 @@ const queryClient = new QueryClient();
 
 function App() {
   const location = useLocation();
+  const token = sessionStorage.getItem("token")
+  
+  function ProtectRoutes() {
+    return token
+      ? <Outlet />
+      : <Navigate to='/auth' replace />
+  }
+
   return (
     <QueryClientProvider client={queryClient}>
       <div className="bg-back-950 w-full min-h-screen flex items-center justify-start flex-col gap-8">
@@ -25,9 +33,11 @@ function App() {
         ${location?.pathname !== '/auth' ? ' w-[90%] lg:w-2/3' : 'w-full'}`}
         >
           <Routes>
+              <Route path="/auth" element={<Auth />}></Route>
+            <Route element={<ProtectRoutes />}>
             <Route path="/" element={<MainHome />}></Route>
-            <Route path="/auth" element={<Auth />}></Route>
-            <Route path="/todo" element={<MainTodo />}></Route>
+              <Route path="/todo" element={<MainTodo />}></Route>
+            </Route>
           </Routes>
         </div>
       </div>
