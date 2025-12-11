@@ -22,6 +22,7 @@ const useCategory = (formData) => {
             const data = mutateAsync(formData)
             console.log(data)
             toast.success("Create Category Successfully")
+
         } catch (error) {
             toast.error(error.massage)
         }
