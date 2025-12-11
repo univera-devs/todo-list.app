@@ -9,6 +9,7 @@ import toast from "react-hot-toast";
 import useCreateCategory from "../useCreateCategory";
 import useDataTodo from "../useDataTodo";
 import useUpdateTodo from "../useUpdateTodo";
+import Loading from "../../../ui/Loading";
 
 const MainCreate = ({ setShowModal, idTodo, setIdTodo }) => {
     const { data: dataTodo, isPending: isPendingDataTodo } = useDataTodo(idTodo)
@@ -94,94 +95,100 @@ const MainCreate = ({ setShowModal, idTodo, setIdTodo }) => {
                         className="text-2xl text-white cursor-pointer"
                     />
                 </div>
-                <div className="flex flex-col items-center justify-center gap-8 w-full">
-                    <TextField
-                        disabled={isPending && (isPendingDataTodo || isPendingCategory || isPendingGetCategory || isPendingUpdateTodo)}
-                        value={formData?.title}
-                        onChange={handleChange("title")}
-                        placeholder={"Title"}
-                        classname={"w-full"}
-                        icon={<PiNotePencil className="text-2xl text-white" />}
-                    />
-                    <TextField
-                        disabled={isPending && (isPendingDataTodo || isPendingCategory || isPendingGetCategory || isPendingUpdateTodo)}
-                        value={formData?.description}
-                        onChange={handleChange("description")}
-                        placeholder={"Description"}
-                        classname={"w-full"}
-                        icon={<PiNotePencil className="text-2xl text-white" />}
-                    />
-
-                    <div className="flex items-center justify-between w-full gap-3">
-                        <div className="w-[40%] flex items-start gap-2 justify-center">
+                {idTodo && !dataTodo
+                    ? <Loading />
+                    : <>
+                        <div className="flex flex-col items-center justify-center gap-8 w-full">
                             <TextField
                                 disabled={isPending && (isPendingDataTodo || isPendingCategory || isPendingGetCategory || isPendingUpdateTodo)}
-                                value={dataCategory.name}
-                                onChange={handleChangeCategory("name")}
-                                placeholder={"category"}
+                                value={formData?.title}
+                                onChange={handleChange("title")}
+                                placeholder={"Title"}
                                 classname={"w-full"}
-                                icon={
-                                    <PiPlus
-                                        onClick={createCategory}
-                                        className="text-2xl text-white hover:text-primary-500 duration-300 cursor-pointer"
-                                    />
-                                }
+                                icon={<PiNotePencil className="text-2xl text-white" />}
                             />
-                        </div>
-
-                        <div className="flex items-center justify-end w-[50%] gap-2">
-                            <select
+                            <TextField
                                 disabled={isPending && (isPendingDataTodo || isPendingCategory || isPendingGetCategory || isPendingUpdateTodo)}
-                                className="bg-gray-600 w-[60%] outline-none rounded-md p-2 text-sm text-white"
-                                name="category_id"
-                                onChange={handleChange("category_id")}
-                                id="category_id"
-                                value={formData.category_id}
-                            >
-                                {data?.map((item) => (
-                                    <option
-                                        key={item?.id}
-                                        value={item?.id}
+                                value={formData?.description}
+                                onChange={handleChange("description")}
+                                placeholder={"Description"}
+                                classname={"w-full"}
+                                icon={<PiNotePencil className="text-2xl text-white" />}
+                            />
+
+                            <div className="flex items-center justify-between w-full gap-3">
+                                <div className="w-[40%] flex items-start gap-2 justify-center">
+                                    <TextField
+                                        disabled={isPending && (isPendingDataTodo || isPendingCategory || isPendingGetCategory || isPendingUpdateTodo)}
+                                        value={dataCategory.name}
+                                        onChange={handleChangeCategory("name")}
+                                        placeholder={"category"}
+                                        classname={"w-full"}
+                                        icon={
+                                            <PiPlus
+                                                onClick={createCategory}
+                                                className="text-2xl text-white hover:text-primary-500 duration-300 cursor-pointer"
+                                            />
+                                        }
+                                    />
+                                </div>
+
+                                <div className="flex items-center justify-end w-[50%] gap-2">
+                                    <select
+                                        disabled={isPending && (isPendingDataTodo || isPendingCategory || isPendingGetCategory || isPendingUpdateTodo)}
+                                        className="bg-gray-600 w-[60%] outline-none rounded-md p-2 text-sm text-white"
+                                        name="category_id"
+                                        onChange={handleChange("category_id")}
+                                        id="category_id"
+                                        value={formData.category_id}
                                     >
-                                        {item?.name}
-                                    </option>
-                                ))}
-                            </select>
+                                        {data?.map((item) => (
+                                            <option
+                                                key={item?.id}
+                                                value={item?.id}
+                                            >
+                                                {item?.name}
+                                            </option>
+                                        ))}
+                                    </select>
+                                </div>
+
+                            </div>
+
+                            <div className="flex items-center justify-start w-full gap-2">
+                                <select
+                                    id="status"
+                                    name="status"
+                                    disabled={isPending && (isPendingDataTodo || isPendingCategory || isPendingGetCategory || isPendingUpdateTodo)}
+                                    className="bg-gray-600 outline-none rounded-md p-2 text-sm text-white"
+                                    onChange={handleChange("status")}
+                                    value={formData.status}
+                                >
+                                    <option value="pending">Pending</option>
+                                    <option value="done">Done</option>
+                                </select>
+                                <select
+                                    disabled={isPending && (isPendingDataTodo || isPendingCategory || isPendingGetCategory || isPendingUpdateTodo)}
+                                    className="bg-gray-600 outline-none rounded-md p-2 text-sm text-white"
+                                    name="priority"
+                                    id="priority"
+                                    value={formData.priority}
+                                    onChange={handleChange("priority")}
+                                >
+                                    <option value="">None Priority</option>
+                                    <option value="high">High Priority</option>
+                                    <option value="medium">Medium Priority</option>
+                                    <option value="low">Low Priority</option>
+                                </select>
+                            </div>
+
                         </div>
 
-                    </div>
-
-                    <div className="flex items-center justify-start w-full gap-2">
-                        <select
-                            id="status"
-                            name="status"
-                            disabled={isPending && (isPendingDataTodo || isPendingCategory || isPendingGetCategory || isPendingUpdateTodo)}
-                            className="bg-gray-600 outline-none rounded-md p-2 text-sm text-white"
-                            onChange={handleChange("status")}
-                            value={formData.status}
-                        >
-                            <option value="pending">Pending</option>
-                            <option value="done">Done</option>
-                        </select>
-                        <select
-                            disabled={isPending && (isPendingDataTodo || isPendingCategory || isPendingGetCategory || isPendingUpdateTodo)}
-                            className="bg-gray-600 outline-none rounded-md p-2 text-sm text-white"
-                            name="priority"
-                            id="priority"
-                            value={formData.priority}
-                            onChange={handleChange("priority")}
-                        >
-                            <option value="">None Priority</option>
-                            <option value="high">High Priority</option>
-                            <option value="medium">Medium Priority</option>
-                            <option value="low">Low Priority</option>
-                        </select>
-                    </div>
-
-                </div>
-                <BtnPrimary onClick={idTodo ? handleUpdate : handleSubmit}>
-                    {idTodo ? "Update" : "Create"}
-                </BtnPrimary>
+                        <BtnPrimary onClick={idTodo ? handleUpdate : handleSubmit}>
+                            {idTodo ? "Update" : "Create"}
+                        </BtnPrimary>
+                    </>
+                }
             </div>
         </Modal>
     )
