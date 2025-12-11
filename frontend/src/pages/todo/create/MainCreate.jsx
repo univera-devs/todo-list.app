@@ -13,10 +13,14 @@ import Loading from "../../../ui/Loading";
 
 const MainCreate = ({ setShowModal, idTodo, setIdTodo }) => {
     const { data: dataTodo, isPending: isPendingDataTodo } = useDataTodo(idTodo)
+
+    // FormData for Category
     const [dataCategory, setDataCategory] = useState({
         name: '',
         color: '#fff',
     })
+
+    // FormData for CreateTodo
     const [formData, setFormData] = useState({
         title: '',
         description: '',
@@ -78,7 +82,11 @@ const MainCreate = ({ setShowModal, idTodo, setIdTodo }) => {
 
     // Handle post category
     const createCategory = () => {
-        handleCreateCategory()
+        if (dataCategory?.name) {
+            handleCreateCategory()
+        }else{
+            toast.error("Empty Field")
+        }
     }
 
     return (
