@@ -2,14 +2,8 @@ import { useSearchParams } from 'react-router-dom';
 import QueryNavLink from '../../ui/QueryNavLink';
 import LoginForm from './LoginForm';
 import SignupForm from './SignupForm';
-import { useEffect } from 'react';
-import { useAuthContext } from '../../context/AuthContext';
-import useNavigateHome from '../../hook/useNavigateHome';
 
 function AuthLayout() {
-  const { token } = useAuthContext();
-  const navigateHome = useNavigateHome();
-
   const [params, setParams] = useSearchParams();
 
   const tab = params.get('tab') || 'login';
@@ -24,12 +18,6 @@ function AuthLayout() {
       return prev;
     })
   }
-
-  // useEffect(() => {
-  //   if (token) {
-  //     navigateHome();
-  //   }
-  // }, [token, navigateHome]);
 
   return (
     <div className="w-full md:w-[470px] flex flex-col p-5 gap-10 justify-between items-center">
